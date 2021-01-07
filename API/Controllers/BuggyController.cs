@@ -36,16 +36,15 @@ namespace API.Controllers
         {
            var thing = _context.Users.Find(-1);
 
-           var thingToReturn = thing.ToString();
+           var thingToReturn = thing.ToString(); 
 
            return thingToReturn;
         }
 
         [HttpGet("bad-request")]
         public ActionResult<string> GetBadRequest()
-        {
-            var req = BadRequest("This was not a good request");
-            return BadRequest("This was not a good request");
+        {            
+            return BadRequest();
         }
 
 

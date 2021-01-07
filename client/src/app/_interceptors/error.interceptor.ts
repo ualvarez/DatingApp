@@ -29,12 +29,18 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                 }
                 throw modalStateErrors.flat();
+              } else if (typeof(error.error) === 'object') {
+                this.toastr.error(error.statusText, error.status);
               } else {
-                this.toastr.error(error.statusText == 'OK' ? 'Bad Request. ' + error.error : error.statusText, error.status);
+                this.toastr.error(error.error, error.status);
               }
               break;
             case 401:
-              this.toastr.error(error.statusText == 'OK' ? 'Unauthorized. ' + error.error : error.statusText, error.status);
+              if (typeof(error.error) === 'object') {
+                this.toastr.error(error.statusText, error.status);
+              } else {
+                this.toastr.error(error.error, error.status);
+              }
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
