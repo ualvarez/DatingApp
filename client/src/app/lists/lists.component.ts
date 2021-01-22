@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Member } from '../_models/member';
-import { Pagination } from '../_models/Pagination';
+import { Pagination } from '../_models/pagination';
 import { MembersService } from '../_services/members.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class ListsComponent implements OnInit {
 members: Partial<Member[]>;
 predicate = 'liked';
 pageNumber = 1;
-pageSize = 5;
+pageSize = 2;
 pagination : Pagination;
 
   constructor(private memberService: MembersService) { }

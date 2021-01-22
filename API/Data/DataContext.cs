@@ -12,12 +12,13 @@ namespace API.Data
 
         public DbSet<UserLike> Likes { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<UserLike>()
-            .HasKey(k => new {k.SourceUserId, k.LinkedUserId});
+            .HasKey(k => new { k.SourceUserId, k.LinkedUserId });
 
             builder.Entity<UserLike>()
             .HasOne(s => s.SourceUser)
@@ -25,15 +26,25 @@ namespace API.Data
             .HasForeignKey(s => s.SourceUserId)
             .OnDelete(DeleteBehavior.Cascade); //In SQL Server you have to use DeleteBehavior.NoAction or you will get an error during migration
 
-             builder.Entity<UserLike>()
-            .HasOne(s => s.LinkedUser)
-            .WithMany(l => l.LikedByUsers)
-            .HasForeignKey(s => s.LinkedUserId)
-            .OnDelete(DeleteBehavior.Cascade); //In SQL Server you have to use DeleteBehavior.NoAction or you will get an error during migration
+            builder.Entity<UserLike>()
+           .HasOne(s => s.LinkedUser)
+           .WithMany(l => l.LikedByUsers)
+           .HasForeignKey(s => s.LinkedUserId)
+           .OnDelete(DeleteBehavior.Cascade); //In SQL Server you have to use DeleteBehavior.NoAction or you will get an error during migration
+
+           builder.Entity<Message>()
+           .HasOne( u => u.Recipient)
+           .WithMany(m => m.MessageReceived)
+           .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+           .HasOne( u => u.Sender)
+           .WithMany(m => m.MessageSent)
+           .OnDelete(DeleteBehavior.Restrict);
 
         }
 
 
-        
+
     }
 }

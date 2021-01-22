@@ -32,7 +32,7 @@ this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = use
    }
 
    updateMember(){
-      this.memberService.updateMember(this.member).subscribe(() =>{
+      this  .memberService.updateMember(this.member).subscribe(() =>{
         this.toastr.success('Profile updated successfully');
         this.editForm.reset(this.member);
       })     
