@@ -27,9 +27,16 @@ pagination : Pagination;
       this.pagination = response.pagination;
     })
   }
-pageChanged(event: any){
+pageChanged1(event: any){
   this.pageNumber = event.page;
   this.loadLikes();
 }  
+
+pageChanged(event: any) {
+  if (this.pageNumber !== event.page) {
+     this.pageNumber = event.page;
+     this.loadLikes()
+   }
+ }
 
 }

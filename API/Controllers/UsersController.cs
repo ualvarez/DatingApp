@@ -29,14 +29,15 @@ namespace API.Controllers
             _userRepository = userRepository;
         }
 
+        [Authorize(Roles = "Admin, Member")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
-            userParams.CurrentUser = user.UserName;    
+            userParams.CurrentUser = user.UserName;
 
-            if(string.IsNullOrEmpty(userParams.Gender))
-            userParams.Gender = user.Gender == "male"? "female" : "male";
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
 
             var users = await _userRepository.GetMembersAsync(userParams);
 
@@ -46,7 +47,7 @@ namespace API.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin, Member")]
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDTO>> GetUser(string username)
         {
